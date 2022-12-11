@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Item } from "types/Item";
 
@@ -7,13 +8,13 @@ interface Props {
   onClose: () => void;
 }
 
-const AddToCart = ({ item, onClose }: Props) => {
+const AddedToCart = ({ item, onClose }: Props) => {
   return (
     <div className="relative z-10" role="dialog" aria-modal="true">
       <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block"></div>
 
       <div className="fixed inset-0 z-10 overflow-y-auto">
-        <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+        <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4 ">
           <div className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
             <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
               <button
@@ -69,6 +70,16 @@ const AddToCart = ({ item, onClose }: Props) => {
                       })}
                     </p>
                   </section>
+
+                  <p className="text-2xl text-gray-900">✅ Added to cart</p>
+                  <div className="ml-3 inline-flex rounded-md shadow">
+                    <Link
+                      href="/cart"
+                      className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base font-medium text-white hover:bg-indigo-700"
+                    >
+                      Go to cart
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -79,4 +90,4 @@ const AddToCart = ({ item, onClose }: Props) => {
   );
 };
 
-export default AddToCart;
+export default AddedToCart;

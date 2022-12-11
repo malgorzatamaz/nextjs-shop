@@ -1,25 +1,31 @@
-import Image from "next/image";
+import Link from "next/link";
+import { useStore } from "store";
+import dynamic from "next/dynamic";
 
-import { items } from "mocks/items";
-import { Item } from "types/Item";
-import ProductItem from "pages/components/ProductItem";
+const CartItem = dynamic(() => import("../../components/cart/CartItem"), {
+  ssr: false,
+});
 
-export async function getStaticProps() {
-  return {
-    props: { items },
-  };
-}
+const Cart = () => {
+  const { cart } = useStore();
 
-const Cart = ({ items }: { items: Item[] }) => {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
           Cart
         </h2>
-        {items.map((item) => (
-          <ProductItem key={item.title} item={item} />
+        {(cart || []).map((item) => (
+          <CartItem key={item.title} item={item} />
         ))}
+        <div className="inline-flex rounded-md shadow">
+          <Link
+            href="/order"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base font-medium text-white hover:bg-indigo-700"
+          >
+            Order items
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -1,21 +1,18 @@
-import { items } from "mocks/items";
 import { Item } from "types/Item";
-import ProductItem from "./components/ProductItem";
-import { GetStaticProps } from "next/types";
+import ProductItem from "../components/ProductItem";
 import Head from "next/head";
-import { useEffect } from "react";
-import db from "prisma/db";
-import { useQuery } from "react-query";
+import { BASE_URL } from "utils";
+import axios from "axios";
 
 interface Props {
   items: Item[];
 }
 
-export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:3000/api/items");
-  const items = await res.json();
+export const getServerSideProps = async () => {
+  const res = await axios.get(`${BASE_URL}/api/items`);
+  const items = await res?.data;
 
-  return { props: { items } };
+  return { props: { items: items || [] } };
 };
 
 export default function Shop({ items }: Props) {
@@ -32,14 +29,13 @@ export default function Shop({ items }: Props) {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Products
           </h2>
-          {(items || []).map((item: Item) => (
-            <ProductItem key={item.title} item={item} />
-          ))}
+          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {(items || []).map((item: Item) => (
+              <ProductItem key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </>
   );
-}
-function graphqlClient() {
-  throw new Error("Function not implemented.");
 }
