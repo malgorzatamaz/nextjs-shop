@@ -27,4 +27,6 @@ model Product {
   image         String
   order         Order?   @relation(fields: [orderId], references: [id])
   orderId       Int?
+  stripeProductId String
+  stripePriceId   String
 }

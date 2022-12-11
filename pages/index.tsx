@@ -1,11 +1,6 @@
-import { items } from "mocks/items";
 import { Item } from "types/Item";
-import ProductItem from "./components/ProductItem";
-import { GetStaticProps } from "next/types";
+import ProductItem from "../components/ProductItem";
 import Head from "next/head";
-import { useEffect } from "react";
-import db from "prisma/db";
-import { useQuery } from "react-query";
 
 interface Props {
   items: Item[];
@@ -19,6 +14,8 @@ export const getStaticProps = async () => {
 };
 
 export default function Shop({ items }: Props) {
+  console.log(process.env.NEXT_PUBLIC_BASE_URL);
+
   return (
     <>
       <Head>
@@ -32,14 +29,13 @@ export default function Shop({ items }: Props) {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Products
           </h2>
-          {(items || []).map((item: Item) => (
-            <ProductItem key={item.title} item={item} />
-          ))}
+          <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {(items || []).map((item: Item) => (
+              <ProductItem key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </>
   );
-}
-function graphqlClient() {
-  throw new Error("Function not implemented.");
 }

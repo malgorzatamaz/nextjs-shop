@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Header } from "./Header";
+import Header from "./Header";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-export const Layout = ({ children }: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <>
       <Header />
@@ -14,3 +14,5 @@ export const Layout = ({ children }: Props) => {
     </>
   );
 };
+
+export default Layout;

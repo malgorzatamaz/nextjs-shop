@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export const Header = () => {
+const Header = () => {
   return (
     <nav className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -37,3 +37,5 @@ export const Header = () => {
     </nav>
   );
 };
+
+export default Header;

@@ -13,9 +13,11 @@ CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "price" INTEGER NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "image" TEXT NOT NULL,
     "orderId" INTEGER,
+    "stripeProductId" TEXT NOT NULL,
+    "stripePriceId" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
