@@ -1,5 +1,3 @@
-import axios from "axios";
-import { items } from "mocks/items";
 import Image from "next/image";
 import { useState } from "react";
 import { useStore } from "store";
@@ -15,8 +13,9 @@ interface Props {
 export const getServerSideProps = async (context: {
   params: { id: number };
 }) => {
-  const res = await axios.get(`${BASE_URL}/api/item/${context.params.id}`);
-  const item = await res?.data;
+  const res = await fetch(`${BASE_URL}/api/item/${context.params.id}`);
+
+  const item = await res?.json();
 
   return { props: { item: item || [] } };
 };

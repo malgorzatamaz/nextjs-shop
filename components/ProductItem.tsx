@@ -11,7 +11,7 @@ const ProductItem = ({ item }: Props) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`${router.basePath}/item/${item.id}`);
+    router.push(`${BASE_URL}/item/${item.id}`);
   };
 
   return (

@@ -1,0 +1,36 @@
+name: Verify
+on:
+  push:
+    branches:
+      - next-page
+      - master
+
+jobs:
+  on-push-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Install project dependencies
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install --prefer-offline
+
+      - name: Test
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: test
+
+      - name: Lint
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: lint
+
+      - name: Typecheck
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: tsc

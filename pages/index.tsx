@@ -2,15 +2,15 @@ import { Item } from "types/Item";
 import ProductItem from "../components/ProductItem";
 import Head from "next/head";
 import { BASE_URL } from "utils";
-import axios from "axios";
+import { NextApiRequest, NextApiResponse } from "next/types";
 
 interface Props {
   items: Item[];
 }
 
 export const getServerSideProps = async () => {
-  const res = await axios.get(`${BASE_URL}/api/items`);
-  const items = await res?.data;
+  const response = await fetch(`${BASE_URL}/api/items`);
+  const items = await response?.json();
 
   return { props: { items: items || [] } };
 };
