@@ -3,14 +3,21 @@ import ProductItem from "../components/ProductItem";
 import Head from "next/head";
 import { BASE_URL } from "utils";
 import { NextApiRequest, NextApiResponse } from "next/types";
+import db from "prisma/db";
 
 interface Props {
   items: Item[];
 }
 
-export const getServerSideProps = async () => {
-  const response = await fetch(`${BASE_URL}/api/items`);
-  const items = await response?.json();
+// export const getServerSideProps = async () => {
+//   const response = await fetch(`${BASE_URL}/api/items`);
+//   const items = await response?.json();
+
+//   return { props: { items: items || [] } };
+// };
+
+export const getStaticProps = async () => {
+  const items = await db.getItems();
 
   return { props: { items: items || [] } };
 };

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import db from "prisma/db";
 import { useState } from "react";
 import { useStore } from "store";
 
@@ -10,31 +11,36 @@ interface Props {
   item: Item;
 }
 
-export const getServerSideProps = async (context: {
-  params: { id: number };
-}) => {
-  const res = await fetch(`${BASE_URL}/api/item/${context.params.id}`);
+// export const getServerSideProps = async (context: {
+//   params: { id: number };
+// }) => {
+//   const res = await fetch(`${BASE_URL}/api/item/${context.params.id}`);
 
-  const item = await res?.json();
+//   const item = await res?.json();
+
+//   return { props: { item: item || [] } };
+// };
+
+export const getStaticProps = async (context: { params: { id: string } }) => {
+  const item = await db.getItem(parseInt(context.params.id));
 
   return { props: { item: item || [] } };
 };
 
-// export async function getStaticPaths() {
-//   const res = await axios.get(`${BASE_URL}/api/items`);
-//   const items = await res?.data;
+export async function getStaticPaths() {
+  const items = await db.getItems();
 
-//   const itemsIds = items.map((item: Item) => ({
-//     params: {
-//       id: (item?.id || "").toString(),
-//     },
-//   }));
+  const itemsIds = items.map((item: Item) => ({
+    params: {
+      id: (item?.id || "").toString(),
+    },
+  }));
 
-//   return {
-//     paths: itemsIds,
-//     fallback: false,
-//   };
-// }
+  return {
+    paths: itemsIds,
+    fallback: false,
+  };
+}
 
 const ProductItem = ({ item }: Props) => {
   const { addToCart } = useStore();

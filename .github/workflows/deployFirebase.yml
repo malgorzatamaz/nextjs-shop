@@ -1,0 +1,32 @@
+name: Deploy to Firebase
+on:
+  push:
+    branches: [next-page]
+
+jobs:
+  build:
+    name: Build and Deploy to Firebase
+    runs-on: ubuntu-latest
+    steps:
+      # - run: echo "Deployed to firebase"
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Create env file
+        run: |
+          touch .env
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+          echo NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} >> .env
+          echo NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }} >> .env
+          echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+          cat .env
+      - name: Install Dependencies
+        run: yarn
+      - name: Build
+        run: yarn build-export
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_CLI_EXPERIMENTS: webframeworks

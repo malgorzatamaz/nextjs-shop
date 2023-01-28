@@ -1,0 +1,25 @@
+name: Deploy to Netlify
+on:
+  push:
+    branches: [next-page]
+
+jobs:
+  build:
+    name: Build and Deploy to Netlify
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deployed to netlify"
+      # - name: Checkout Repo
+      #   uses: actions/checkout@v3
+      # - name: Install Dependencies
+      #   run: yarn
+      # - name: Build
+      #   run: yarn build
+      # env:
+      #   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      #   NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+      #   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+      #   STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+
+      # - name: Deploy
+      #   run: yarn netlify deploy
