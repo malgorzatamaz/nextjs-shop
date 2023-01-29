@@ -11,36 +11,36 @@ interface Props {
   item: Item;
 }
 
-// export const getServerSideProps = async (context: {
-//   params: { id: number };
-// }) => {
-//   const res = await fetch(`${BASE_URL}/api/item/${context.params.id}`);
+export const getServerSideProps = async (context: {
+  params: { id: number };
+}) => {
+  const res = await fetch(`${BASE_URL}/api/item/${context.params.id}`);
 
-//   const item = await res?.json();
-
-//   return { props: { item: item || [] } };
-// };
-
-export const getStaticProps = async (context: { params: { id: string } }) => {
-  const item = await db.getItem(parseInt(context.params.id));
+  const item = await res?.json();
 
   return { props: { item: item || [] } };
 };
 
-export async function getStaticPaths() {
-  const items = await db.getItems();
+// export const getStaticProps = async (context: { params: { id: string } }) => {
+//   const item = await db.getItem(parseInt(context.params.id));
 
-  const itemsIds = items.map((item: Item) => ({
-    params: {
-      id: (item?.id || "").toString(),
-    },
-  }));
+//   return { props: { item: item || [] } };
+// };
 
-  return {
-    paths: itemsIds,
-    fallback: false,
-  };
-}
+// export async function getStaticPaths() {
+//   const items = await db.getItems();
+
+//   const itemsIds = items.map((item: Item) => ({
+//     params: {
+//       id: (item?.id || "").toString(),
+//     },
+//   }));
+
+//   return {
+//     paths: itemsIds,
+//     fallback: false,
+//   };
+// }
 
 const ProductItem = ({ item }: Props) => {
   const { addToCart } = useStore();

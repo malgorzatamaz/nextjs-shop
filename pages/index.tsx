@@ -9,18 +9,18 @@ interface Props {
   items: Item[];
 }
 
-// export const getServerSideProps = async () => {
-//   const response = await fetch(`${BASE_URL}/api/items`);
-//   const items = await response?.json();
-
-//   return { props: { items: items || [] } };
-// };
-
-export const getStaticProps = async () => {
-  const items = await db.getItems();
+export const getServerSideProps = async () => {
+  const response = await fetch(`${BASE_URL}/api/items`);
+  const items = await response?.json();
 
   return { props: { items: items || [] } };
 };
+
+// export const getStaticProps = async () => {
+//   const items = await db.getItems();
+
+//   return { props: { items: items || [] } };
+// };
 
 export default function Shop({ items }: Props) {
   return (
