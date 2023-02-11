@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  client:
+    build: ./pages
+    volumes:
+      - .:/pages
+      - ./node_modules
+    command: sh -c "npx prisma migrate dev --name init && yarn run dev"
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+  api:
+    build: ./pages/api
+    command: sh -c "yarn run dev"
+    ports:
+      - 3001:3001
+    working_dir: /pages/api
+    volumes:
+      - .:/pages/api
+      - ./node_modules
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    container_name: postgres
+    hostname: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./db/data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
