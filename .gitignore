@@ -62,3 +62,6 @@ amplifytools.xcconfig
 
 # Local Netlify folder
 .netlify
+
+#docker
+/db

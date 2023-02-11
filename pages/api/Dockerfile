@@ -1,0 +1,3 @@
+FROM node:18
+WORKDIR /pages/api
+EXPOSE 3001
